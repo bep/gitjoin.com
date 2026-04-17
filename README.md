@@ -1,1 +1,1 @@
-A template for a basic Hugo site.
+Source for [gitjoin.com](https://gitjoin.com).

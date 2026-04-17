@@ -261,8 +261,8 @@ body.is-joined .cell {
 }
 
 .cta-visual {
+  display: none;
   margin-top: var(--space-sm);
-  display: inline-flex;
   align-items: center;
   gap: 0.6em;
   padding: 0.7rem 1rem 0.7rem 0.85rem;
@@ -431,6 +431,7 @@ body.is-joined .site-footer { opacity: 1; }
   }
 
   .cta-visual {
+    display: inline-flex;
     padding: 0.65rem 0.85rem 0.65rem 0.75rem;
     font-size: 0.8125rem;
     flex-wrap: nowrap;
