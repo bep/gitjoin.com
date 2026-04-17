@@ -1,8 +1,58 @@
 {{ define "main" }}
-<h1>{{ .Title }}</h1>
-<p class="muted">Basic page structure for testing.</p>
-<section class="card">
-	<h2>Content Block</h2>
-	<p>Replace this with real content.</p>
-</section>
+{{- $repo := site.Params.repoURL | default "https://github.com/bep/gitjoin" -}}
+<main class="stage">
+	<div class="lattice" role="presentation">
+		{{/* Row 1 */}}
+		<div class="cell" data-tint="amber" style="--dx:-60px;--dy:-48px;--r:-5deg;--d:40ms">api</div>
+		<div class="cell"                    style="--dx: 28px;--dy:-64px;--r: 3deg;--d:120ms">cli</div>
+		<div class="cell" data-tint="teal"   style="--dx:-18px;--dy:-72px;--r:-2deg;--d:200ms">ui</div>
+		<div class="cell"                    style="--dx: 48px;--dy:-50px;--r: 4deg;--d:280ms">docs</div>
+		<div class="cell" data-tint="rust"   style="--dx:-30px;--dy:-60px;--r:-4deg;--d:360ms">core</div>
+
+		{{/* Row 2 */}}
+		<div class="cell"                    style="--dx:-88px;--dy:-20px;--r:-7deg;--d:80ms">www</div>
+
+		<a class="cell center"
+		   href="{{ $repo }}"
+		   rel="noopener"
+		   aria-label="Open the gitjoin repository on GitHub">
+			<div class="center-inner">
+				<h1 class="wordmark"><span>git</span><span class="join">join</span></h1>
+				<p class="slogan">Virtual monorepo made simple.</p>
+
+				<span class="cta-visual">
+					<span class="cta-chevron" aria-hidden="true">→</span>
+					<span class="cta-label">github.com/bep/gitjoin</span>
+				</span>
+
+				<p class="meta" aria-hidden="true">
+					<span class="meta-dot"></span>
+					<span class="meta-text">16 repositories &middot; 1 virtual tree</span>
+				</p>
+			</div>
+		</a>
+
+		<div class="cell" data-tint="teal"   style="--dx: 92px;--dy: 8px;--r: 5deg;--d:160ms">tool</div>
+
+		{{/* Row 3 */}}
+		<div class="cell" data-tint="amber"  style="--dx:-96px;--dy:  0px;--r:-8deg;--d:240ms">fmt</div>
+		<div class="cell mobile-hide"        style="--dx: 84px;--dy:-12px;--r: 6deg;--d:320ms">dx</div>
+
+		{{/* Row 4 */}}
+		<div class="cell" data-tint="rust"   style="--dx:-72px;--dy: 22px;--r:-6deg;--d:400ms">log</div>
+		<div class="cell mobile-hide"        style="--dx: 88px;--dy: 30px;--r: 7deg;--d:480ms">pkg</div>
+
+		{{/* Row 5 */}}
+		<div class="cell"                    style="--dx:-42px;--dy: 64px;--r: 3deg;--d:160ms">http</div>
+		<div class="cell mobile-hide" data-tint="teal" style="--dx: 22px;--dy: 68px;--r:-2deg;--d:240ms">data</div>
+		<div class="cell" data-tint="amber"  style="--dx:-30px;--dy: 76px;--r: 5deg;--d:320ms">auth</div>
+		<div class="cell mobile-hide"        style="--dx: 44px;--dy: 62px;--r:-4deg;--d:400ms">web</div>
+		<div class="cell" data-tint="rust"   style="--dx:-20px;--dy: 72px;--r: 2deg;--d:480ms">cfg</div>
+	</div>
+
+	<aside class="corner-mark" aria-hidden="true">
+		<span>./</span>
+		<span class="corner-mark-path">gitjoin</span>
+	</aside>
+</main>
 {{ end }}

@@ -1,7 +1,6 @@
-baseURL = "https://example.com/"
-title   = "My Hugo Site"
+baseURL = "https://gitjoin.com/"
+title   = "gitjoin — Virtual monorepo made simple."
 
-# Only home for now, remove what you want.
 disableKinds = [
     "taxonomy",
     "term",
@@ -12,3 +11,7 @@ disableKinds = [
     "section",
     "sitemap",
 ]
+
+[params]
+  description = "gitjoin turns many repositories into one virtual monorepo. Minimal config, no rewrites of history."
+  repoURL     = "https://github.com/bep/gitjoin"

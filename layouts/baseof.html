@@ -2,8 +2,23 @@
 <html lang="{{ site.Language.Locale }}" dir="{{ or site.Language.Direction `ltr` }}">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
+		{{- with site.Params.description }}
+			<meta name="description" content="{{ . }}" />
+			<meta property="og:description" content="{{ . }}" />
+		{{- end }}
+		<meta property="og:title" content="{{ site.Title }}" />
+		<meta property="og:type" content="website" />
+		<meta name="theme-color" content="#16161a" />
+
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="apple-touch-icon" href="/favicon.svg" />
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
 		{{- with resources.Get "css/main.css" }}
 			{{- $opts := dict
 				"minify" (cond hugo.IsDevelopment false true)
@@ -26,24 +41,20 @@
 			}}
 			{{- with . | js.Build $opts }}
 				{{- if hugo.IsDevelopment }}
-					<script src="{{ .RelPermalink }}"></script>
+					<script defer src="{{ .RelPermalink }}"></script>
 				{{- else }}
 					{{- with . | fingerprint }}
-						<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
+						<script defer src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
 					{{- end }}
 				{{- end }}
 			{{- end }}
 		{{- end }}
 	</head>
 	<body>
-		<header>
-			<strong>{{ site.Title }}</strong>
-		</header>
-		<main>
-			{{ block "main" . }}{{ end }}
-		</main>
-		<footer>
-			<small class="muted">Copyright {{ now.Year }}. All rights reserved.</small>
+		{{ block "main" . }}{{ end }}
+		<footer class="site-footer">
+			<span class="footer-dot" aria-hidden="true"></span>
+			<span>gitjoin &middot; {{ now.Year }} &middot; made by <a href="https://github.com/bep">bep</a></span>
 		</footer>
 	</body>
 </html>
