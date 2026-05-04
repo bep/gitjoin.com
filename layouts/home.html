@@ -54,5 +54,38 @@
 		<span>./</span>
 		<span class="corner-mark-path">gitjoin</span>
 	</aside>
+
+	<section class="sr-only" aria-label="About gitjoin">
+		<h2>What is gitjoin?</h2>
+		<p>
+			gitjoin is an open-source command-line tool that turns many Git repositories
+			into one virtual monorepo. It joins independent repositories into a single,
+			navigable working tree without rewriting history, without submodules, and
+			without forcing teams to consolidate their codebases.
+		</p>
+
+		<h2>Why a virtual monorepo?</h2>
+		<p>
+			A virtual monorepo gives you the developer-experience benefits of a monorepo —
+			one tree to search, build, format, and review across — while each repository
+			stays independently versioned and owned. Polyrepo on disk, monorepo at the
+			workbench.
+		</p>
+
+		<h2>Features</h2>
+		<ul>
+			<li>Minimal configuration — one small config file per virtual tree.</li>
+			<li>No history rewrites: original repositories remain untouched.</li>
+			<li>A lightweight alternative to Git submodules and subtree merges.</li>
+			<li>Written in Go; runs on Linux, macOS, and Windows.</li>
+			<li>Free and open source under the MIT license.</li>
+		</ul>
+
+		<h2>Get gitjoin</h2>
+		<p>
+			Source code, releases, and documentation live on GitHub:
+			<a href="{{ $repo }}" rel="noopener">{{ $repo }}</a>.
+		</p>
+	</section>
 </main>
 {{ end }}

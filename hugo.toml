@@ -1,17 +1,37 @@
-baseURL = "https://gitjoin.com/"
-title   = "gitjoin — Virtual monorepo made simple."
+baseURL          = "https://gitjoin.com/"
+title            = "gitjoin — Virtual monorepo made simple."
+languageCode     = "en-us"
+defaultContentLanguage = "en"
+enableRobotsTXT  = true
 
 disableKinds = [
     "taxonomy",
     "term",
     "404",
     "page",
-    "robotstxt",
     "rss",
     "section",
-    "sitemap",
 ]
 
 [params]
-  description = "gitjoin turns many repositories into one virtual monorepo. Minimal config, no rewrites of history."
+  description = "gitjoin merges multiple Git repositories into a single virtual monorepo. A lightweight, open-source CLI written in Go — minimal config, no history rewrites, no submodules."
   repoURL     = "https://github.com/bep/gitjoin"
+  author      = "Bjørn Erik Pedersen"
+  ogImage     = "/og.svg"
+  keywords    = [
+    "virtual monorepo",
+    "git monorepo",
+    "monorepo tool",
+    "multi-repo",
+    "polyrepo",
+    "git submodules alternative",
+    "merge git repositories",
+    "monorepo CLI",
+    "gitjoin",
+    "Go monorepo tool",
+  ]
+
+[sitemap]
+  changefreq = "weekly"
+  priority   = 1.0
+  filename   = "sitemap.xml"

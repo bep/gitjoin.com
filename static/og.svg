@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="gitjoin — virtual monorepo made simple">
+  <defs>
+    <radialGradient id="veil" cx="50%" cy="40%" r="60%">
+      <stop offset="0%"  stop-color="#26221d"/>
+      <stop offset="100%" stop-color="#16161a"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#veil)"/>
+
+  <!-- Lattice cells -->
+  <g fill="#26241f" stroke="#332f29" stroke-width="1">
+    <rect x="120"  y="80"  width="160" height="60" rx="2"/>
+    <rect x="290"  y="80"  width="160" height="60" rx="2" fill="#2a2521"/>
+    <rect x="460"  y="80"  width="160" height="60" rx="2"/>
+    <rect x="750"  y="80"  width="160" height="60" rx="2" fill="#222a2c"/>
+    <rect x="920"  y="80"  width="160" height="60" rx="2"/>
+
+    <rect x="80"   y="490" width="160" height="60" rx="2" fill="#2c241f"/>
+    <rect x="260"  y="490" width="160" height="60" rx="2"/>
+    <rect x="780"  y="490" width="160" height="60" rx="2"/>
+    <rect x="960"  y="490" width="160" height="60" rx="2" fill="#222a2c"/>
+  </g>
+
+  <!-- Cell labels -->
+  <g fill="#7a7064" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="22" letter-spacing="1.2">
+    <text x="160" y="118">api</text>
+    <text x="332" y="118">cli</text>
+    <text x="500" y="118">docs</text>
+    <text x="790" y="118">core</text>
+    <text x="958" y="118">www</text>
+
+    <text x="120" y="528">log</text>
+    <text x="298" y="528">http</text>
+    <text x="818" y="528">auth</text>
+    <text x="1000" y="528">cfg</text>
+  </g>
+
+  <!-- Center card -->
+  <rect x="240" y="180" width="720" height="270" rx="2" fill="#2b2722" stroke="#4a423a" stroke-width="1"/>
+
+  <!-- Center card corner ticks -->
+  <g stroke="#4a423a" stroke-width="2" fill="none">
+    <path d="M256 196 h16 M256 196 v16"/>
+    <path d="M944 196 h-16 M944 196 v16"/>
+    <path d="M256 434 h16 M256 434 v-16"/>
+    <path d="M944 434 h-16 M944 434 v-16"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g font-family="'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif" font-weight="700" font-size="148" letter-spacing="-7">
+    <text x="600" y="320" text-anchor="middle">
+      <tspan fill="#efe9df">git</tspan><tspan fill="#e6a472">join</tspan>
+    </text>
+  </g>
+
+  <!-- Slogan -->
+  <text x="600" y="378" text-anchor="middle"
+        font-family="'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif"
+        font-weight="450" font-size="30" fill="#b8ad9c" letter-spacing="-0.3">
+    Virtual monorepo made simple.
+  </text>
+
+  <!-- Repo URL pill -->
+  <g transform="translate(600 412)">
+    <rect x="-200" y="0" width="400" height="40" rx="2" fill="#1f1d1b" stroke="#4a423a"/>
+    <text x="-180" y="27" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="18" fill="#e6a472">→</text>
+    <text x="-150" y="27" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="18" fill="#efe9df">github.com/bep/gitjoin</text>
+  </g>
+</svg>
