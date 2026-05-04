@@ -24,7 +24,7 @@ trap cleanup EXIT SIGINT SIGTERM
 
 main() {
 	# Define tool versions
-	HUGO_VERSION=0.160.0
+	HUGO_VERSION=0.161.1
 
 	# Set the build timezone
 	export TZ=Europe/Oslo
