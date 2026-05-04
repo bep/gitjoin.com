@@ -17,7 +17,7 @@ disableKinds = [
   description = "gitjoin merges multiple Git repositories into a single virtual monorepo. A lightweight, open-source CLI written in Go — minimal config, no history rewrites, no submodules."
   repoURL     = "https://github.com/bep/gitjoin"
   author      = "Bjørn Erik Pedersen"
-  ogImage     = "/og.svg"
+  ogImage     = "/og.png"
   keywords    = [
     "virtual monorepo",
     "git monorepo",
