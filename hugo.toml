@@ -1,5 +1,5 @@
 baseURL                = "https://gitjoin.com/"
-title                  = "gitjoin — Virtual monorepo made simple."
+title                  = "gitjoin: Virtual monorepo made simple."
 locale                 = "en-us"
 defaultContentLanguage = "en"
 enableRobotsTXT        = true
@@ -7,9 +7,15 @@ enableRobotsTXT        = true
 disableKinds = ["taxonomy", "term", "404", "page", "rss", "section"]
 
 [params]
+  name = "gitjoin"
   description = "gitjoin merges multiple Git repositories into a single virtual monorepo. A lightweight, open-source CLI written in Go — minimal config, no history rewrites, no submodules."
   repoURL = "https://github.com/bep/gitjoin"
   author = "Bjørn Erik Pedersen"
+  authorURL = "https://github.com/bep"
+  authorHandle = "bep"
+  licenseURL = "https://opensource.org/licenses/MIT"
+  programmingLanguage = "Go"
+  themeColor = "#16161a"
   keywords = [
     "virtual monorepo",
     "git monorepo",
@@ -22,6 +28,22 @@ disableKinds = ["taxonomy", "term", "404", "page", "rss", "section"]
     "gitjoin",
     "Go monorepo tool",
   ]
+
+# Design tokens consumed via @import "hugo:vars" in main.css.
+# gitjoin is dark only — no [params.vars.dark] override block needed.
+[params.vars]
+  bg        = "oklch(16% 0.008 65)"
+  surface   = "oklch(22% 0.009 62)"
+  rule      = "oklch(32% 0.010 60)"
+  rule-soft = "oklch(27% 0.008 60)"
+  fg        = "oklch(94% 0.010 85)"
+  fg-mute   = "oklch(72% 0.012 75)"
+  fg-dim    = "oklch(55% 0.012 65)"
+  accent    = "oklch(78% 0.110 58)"
+  match-bg  = "oklch(28% 0.028 62)"
+  match-fg  = "oklch(82% 0.065 70)"
+  font-sans = '"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif'
+  font-mono = '"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace'
 
 [sitemap]
   changefreq = "weekly"

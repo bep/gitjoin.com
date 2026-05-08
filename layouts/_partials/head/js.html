@@ -1,0 +1,22 @@
+{{- /*
+  Loads a JS asset by path through Hugo's js.Build pipeline (deferred).
+
+  Usage:
+    {{ partial "head/js.html" (dict "ctx" . "path" "js/main.js") }}
+*/ -}}
+{{- $path := .path -}}
+{{- with resources.Get $path -}}
+	{{- $opts := dict
+		"minify" (cond hugo.IsDevelopment false true)
+		"sourceMap" (cond hugo.IsDevelopment "linked" "none")
+	-}}
+	{{- with . | js.Build $opts -}}
+		{{- if hugo.IsDevelopment -}}
+			<script defer src="{{ .RelPermalink }}"></script>
+		{{- else -}}
+			{{- with . | fingerprint -}}
+				<script defer src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
+			{{- end -}}
+		{{- end -}}
+	{{- end -}}
+{{- end -}}

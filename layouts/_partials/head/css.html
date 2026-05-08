@@ -1,0 +1,26 @@
+{{- /*
+  Loads a CSS asset by path through Hugo's css.Build pipeline.
+  Passes site.Params.vars to css.Build so design tokens declared in
+  hugo.toml are available via @import "hugo:vars" (and "hugo:vars/<key>"
+  with media queries for theme variants).
+
+  Usage:
+    {{ partial "head/css.html" (dict "ctx" . "path" "css/main.css") }}
+*/ -}}
+{{- $path := .path -}}
+{{- with resources.Get $path -}}
+	{{- $opts := dict
+		"minify" (cond hugo.IsDevelopment false true)
+		"sourceMap" (cond hugo.IsDevelopment "linked" "none")
+		"vars" (site.Params.vars | default dict)
+	-}}
+	{{- with . | css.Build $opts -}}
+		{{- if hugo.IsDevelopment -}}
+			<link rel="stylesheet" href="{{ .RelPermalink }}">
+		{{- else -}}
+			{{- with . | fingerprint -}}
+				<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+			{{- end -}}
+		{{- end -}}
+	{{- end -}}
+{{- end -}}

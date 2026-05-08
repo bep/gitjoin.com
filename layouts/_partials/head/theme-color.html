@@ -1,0 +1,13 @@
+{{- $light := "#16161a" -}}
+{{- $dark := "#16161a" -}}
+{{- with site.Params.themeColor -}}
+	{{- if reflect.IsMap . -}}
+		{{- with .light }}{{ $light = . }}{{ end -}}
+		{{- with .dark }}{{ $dark = . }}{{ end -}}
+	{{- else -}}
+		{{- $light = . -}}
+		{{- $dark = . -}}
+	{{- end -}}
+{{- end -}}
+<meta name="theme-color" content="{{ $light }}" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="{{ $dark }}" media="(prefers-color-scheme: dark)" />

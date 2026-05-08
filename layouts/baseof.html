@@ -30,7 +30,7 @@
 		{{ partial "opengraph.html" . }}
 		{{ partial "twitter_cards.html" . }}
 
-		<meta name="theme-color" content="#16161a" />
+		{{ partial "head/theme-color.html" . }}
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="apple-touch-icon" href="/favicon.svg" />
 
@@ -38,46 +38,13 @@
 			{{ partial "schema-home.html" . }}
 		{{- end }}
 
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+		{{ partial "head/fonts.html" . }}
 
-		{{- with resources.Get "css/main.css" }}
-			{{- $opts := dict
-				"minify" (cond hugo.IsDevelopment false true)
-				"sourceMap" (cond hugo.IsDevelopment "linked" "none")
-			}}
-			{{- with . | css.Build $opts }}
-				{{- if hugo.IsDevelopment }}
-					<link rel="stylesheet" href="{{ .RelPermalink }}">
-				{{- else }}
-					{{- with . | fingerprint }}
-						<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-					{{- end }}
-				{{- end }}
-			{{- end }}
-		{{- end }}
-		{{- with resources.Get "js/main.js" }}
-			{{- $opts := dict
-				"minify" (cond hugo.IsDevelopment false true)
-				"sourceMap" (cond hugo.IsDevelopment "linked" "none")
-			}}
-			{{- with . | js.Build $opts }}
-				{{- if hugo.IsDevelopment }}
-					<script defer src="{{ .RelPermalink }}"></script>
-				{{- else }}
-					{{- with . | fingerprint }}
-						<script defer src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
-					{{- end }}
-				{{- end }}
-			{{- end }}
-		{{- end }}
+		{{ partial "head/css.html" (dict "ctx" . "path" "css/main.css") }}
+		{{ partial "head/js.html" (dict "ctx" . "path" "js/main.js") }}
 	</head>
 	<body>
 		{{ block "main" . }}{{ end }}
-		<footer class="site-footer">
-			<span class="footer-dot" aria-hidden="true"></span>
-			<span>gitjoin &middot; {{ now.Year }} &middot; made by <a href="https://github.com/bep" rel="noopener me">bep</a></span>
-		</footer>
+		{{ partial "site-footer.html" . }}
 	</body>
 </html>

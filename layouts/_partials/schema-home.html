@@ -1,4 +1,8 @@
-{{- $desc := site.Params.description }}
+{{- $desc := site.Params.description -}}
+{{- $name := site.Params.name | default "gitjoin" -}}
+{{- $authorURL := site.Params.authorURL | default "https://github.com/bep" -}}
+{{- $licenseURL := site.Params.licenseURL | default "https://opensource.org/licenses/MIT" -}}
+{{- $lang := site.Params.programmingLanguage | default "Go" -}}
 {{- $ld := dict
 	"@context" "https://schema.org"
 	"@graph" (slice
@@ -6,25 +10,25 @@
 	"@type" "WebSite"
 	"@id" (printf "%s#website" .Permalink)
 	"url" .Permalink
-	"name" "gitjoin"
+	"name" $name
 	"description" $desc
 	"inLanguage" (site.Language.Locale)
 	)
 	(dict
 	"@type" "SoftwareApplication"
-	"name" (site.Params.name | default "gitjoin")
+	"name" $name
 	"applicationCategory" "DeveloperApplication"
 	"operatingSystem" "Linux, macOS, Windows"
 	"description" $desc
 	"url" .Permalink
 	"downloadUrl" site.Params.repoURL
 	"codeRepository" site.Params.repoURL
-	"programmingLanguage" (site.Params.programminLanguage | default "Go")
-	"license" (site.Params.programminLanguage | default "https://opensource.org/licenses/MIT")
+	"programmingLanguage" $lang
+	"license" $licenseURL
 	"author" (dict
 	"@type" "Person"
 	"name" site.Params.author
-	"url" "https://github.com/bep"
+	"url" $authorURL
 	)
 	"offers" (dict
 	"@type" "Offer"

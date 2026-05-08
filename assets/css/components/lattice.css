@@ -1,0 +1,400 @@
+/* Lattice — gitjoin's home-page-specific component.
+   Layered on top of base.css. Adds extended tokens, the body veil,
+   and the lattice grid + reveal animation. */
+
+:root {
+	/* Lattice-extended palette. Sites that want a deeper gitjoin-style
+	   surface system can rely on these; doc-style siblings ignore them. */
+	--bg-veil:      oklch(19% 0.010 60);
+	--surface-2:    oklch(25% 0.010 58);
+	--surface-lift: oklch(28% 0.012 55);
+	--border:       oklch(32% 0.010 60);
+	--border-soft:  oklch(27% 0.008 60);
+	--border-lift:  oklch(42% 0.012 55);
+
+	--fg-ghost:     oklch(42% 0.010 60);
+
+	--accent-mid: oklch(64% 0.100 58);
+	--accent-low: oklch(38% 0.050 58);
+
+	--fs-slogan:   clamp(1.0625rem, 0.95rem + 0.5vw, 1.25rem);
+	--fs-wordmark: clamp(2.75rem, 1.9rem + 4.5vw, 5rem);
+
+	--tint-amber-bg:  oklch(25% 0.028 62);
+	--tint-amber-fg:  oklch(82% 0.065 70);
+	--tint-amber-dot: oklch(74% 0.110 60);
+
+	--tint-teal-bg:   oklch(25% 0.020 198);
+	--tint-teal-fg:   oklch(80% 0.045 195);
+	--tint-teal-dot:  oklch(70% 0.080 195);
+
+	--tint-rust-bg:   oklch(25% 0.028 30);
+	--tint-rust-fg:   oklch(80% 0.060 35);
+	--tint-rust-dot:  oklch(70% 0.110 35);
+
+	--dur-settle: 1100ms;
+	--dur-fade:   700ms;
+}
+
+body {
+	font-variation-settings: "opsz" 14, "wght" 400;
+	font-feature-settings: "ss01", "ss02";
+	letter-spacing: -0.005em;
+	background:
+		radial-gradient(1200px 720px at 50% 38%, var(--bg-veil), transparent 70%),
+		var(--bg);
+}
+
+/* ---------- Stage + lattice ---------- */
+
+.stage {
+	position: relative;
+	display: grid;
+	place-items: center;
+	padding: clamp(1rem, 2vw, 2.5rem);
+	width: 100%;
+}
+
+.lattice {
+	--cell-w: clamp(5rem, 12vw, 7.5rem);
+	--cell-h: clamp(3rem, 6vw, 3.75rem);
+
+	display: grid;
+	grid-template-columns: repeat(5, var(--cell-w));
+	grid-auto-rows: var(--cell-h);
+	gap: 2px;
+	width: max-content;
+	max-width: 100%;
+	position: relative;
+}
+
+/* Subtle register-mark corners on the lattice. */
+.lattice::before,
+.lattice::after {
+	content: "";
+	position: absolute;
+	width: 14px;
+	height: 14px;
+	border: 1px solid var(--border);
+	pointer-events: none;
+}
+.lattice::before {
+	top: -22px;
+	left: -22px;
+	border-right: 0;
+	border-bottom: 0;
+}
+.lattice::after {
+	bottom: -22px;
+	right: -22px;
+	border-left: 0;
+	border-top: 0;
+}
+
+/* ---------- Cells ---------- */
+
+.cell {
+	background: var(--surface);
+	border: 1px solid var(--border-soft);
+	color: var(--fg-dim);
+	font-family: var(--font-mono);
+	font-size: var(--fs-label);
+	letter-spacing: 0.04em;
+	text-transform: lowercase;
+	display: flex;
+	align-items: center;
+	gap: 0.55em;
+	padding: 0 var(--space-sm);
+	overflow: hidden;
+	position: relative;
+	opacity: 0;
+	transform: translate(var(--dx, 0), var(--dy, 0)) rotate(var(--r, 0));
+	transition:
+		transform var(--dur-settle) var(--ease-out) var(--d, 0ms),
+		opacity var(--dur-fade) linear var(--d, 0ms),
+		border-color 220ms ease,
+		background 220ms ease,
+		color 220ms ease;
+}
+
+.cell::before {
+	content: "";
+	width: 5px;
+	height: 5px;
+	background: var(--fg-ghost);
+	flex: 0 0 auto;
+	border-radius: 1px;
+	transition: background 220ms ease, transform 220ms ease;
+}
+
+body.is-joined .cell {
+	opacity: 1;
+	transform: translate(0, 0) rotate(0);
+}
+
+.cell[data-tint="amber"] { background: var(--tint-amber-bg); color: var(--tint-amber-fg); }
+.cell[data-tint="amber"]::before { background: var(--tint-amber-dot); }
+.cell[data-tint="teal"]  { background: var(--tint-teal-bg);  color: var(--tint-teal-fg); }
+.cell[data-tint="teal"]::before  { background: var(--tint-teal-dot); }
+.cell[data-tint="rust"]  { background: var(--tint-rust-bg);  color: var(--tint-rust-fg); }
+.cell[data-tint="rust"]::before  { background: var(--tint-rust-dot); }
+
+/* ---------- Center card (the 'joined' monorepo) — acts as the link ---------- */
+
+.cell.center {
+	grid-column: 2 / span 3;
+	grid-row: 2 / span 3;
+	background: var(--surface-lift);
+	border: 1px solid var(--border-lift);
+	color: var(--fg);
+	padding: clamp(1.25rem, 2.5vw, 2.25rem);
+	--d: 640ms;
+	--corner-color: var(--border-lift);
+	text-transform: none;
+	letter-spacing: 0;
+	display: grid;
+	place-items: center;
+	overflow: visible;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.cell.center::before { display: none; }
+
+.cell.center::after {
+	content: "";
+	position: absolute;
+	inset: 6px;
+	pointer-events: none;
+	transition: background 220ms ease;
+	background:
+		linear-gradient(var(--corner-color), var(--corner-color)) top    left  / 10px 1px no-repeat,
+		linear-gradient(var(--corner-color), var(--corner-color)) top    left  / 1px 10px no-repeat,
+		linear-gradient(var(--corner-color), var(--corner-color)) top    right / 10px 1px no-repeat,
+		linear-gradient(var(--corner-color), var(--corner-color)) top    right / 1px 10px no-repeat,
+		linear-gradient(var(--corner-color), var(--corner-color)) bottom left  / 10px 1px no-repeat,
+		linear-gradient(var(--corner-color), var(--corner-color)) bottom left  / 1px 10px no-repeat,
+		linear-gradient(var(--corner-color), var(--corner-color)) bottom right / 10px 1px no-repeat,
+		linear-gradient(var(--corner-color), var(--corner-color)) bottom right / 1px 10px no-repeat;
+}
+
+.cell.center:hover,
+.cell.center:focus-visible {
+	background: var(--surface-2);
+	border-color: var(--accent-mid);
+	--corner-color: var(--accent);
+	outline: none;
+}
+
+.cell.center:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 4px;
+}
+
+.center-inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-md);
+	text-align: center;
+	width: 100%;
+}
+
+.wordmark {
+	font-family: var(--font-sans);
+	font-variation-settings: "opsz" 96, "wght" 700;
+	font-size: var(--fs-wordmark);
+	line-height: 0.92;
+	letter-spacing: -0.045em;
+	color: var(--fg);
+}
+
+.wordmark .join {
+	color: var(--accent);
+}
+
+.slogan {
+	font-family: var(--font-sans);
+	font-variation-settings: "opsz" 14, "wght" 450;
+	font-size: var(--fs-slogan);
+	color: var(--fg-mute);
+	letter-spacing: -0.01em;
+	max-width: 28ch;
+}
+
+.cta-visual {
+	display: none;
+	margin-top: var(--space-sm);
+	align-items: center;
+	gap: 0.6em;
+	padding: 0.7rem 1rem 0.7rem 0.85rem;
+	font-family: var(--font-mono);
+	font-size: var(--fs-mono);
+	color: var(--fg);
+	border: 1px solid var(--border-lift);
+	background: var(--surface);
+	transition:
+		background 220ms ease,
+		border-color 220ms ease,
+		color 220ms ease;
+}
+
+.cta-chevron {
+	color: var(--accent);
+	font-family: var(--font-mono);
+	transition: transform 280ms var(--ease-out);
+	display: inline-block;
+	will-change: transform;
+}
+
+.cta-label { letter-spacing: 0; }
+
+.cell.center:hover .cta-visual,
+.cell.center:focus-visible .cta-visual {
+	background: var(--bg-veil);
+	border-color: var(--accent);
+}
+
+.cell.center:hover .cta-chevron,
+.cell.center:focus-visible .cta-chevron {
+	transform: translateX(4px);
+}
+
+.meta {
+	font-family: var(--font-mono);
+	font-size: var(--fs-label);
+	color: var(--fg-ghost);
+	display: inline-flex;
+	align-items: center;
+	gap: 0.6em;
+	margin-top: 0.25rem;
+	letter-spacing: 0.04em;
+}
+
+.meta-dot {
+	width: 4px;
+	height: 4px;
+	background: var(--accent-low);
+	border-radius: 50%;
+	display: inline-block;
+}
+
+/* ---------- Corner mark (top-left 'breadcrumb') ---------- */
+
+.corner-mark {
+	position: fixed;
+	top: clamp(1rem, 2vw, 1.5rem);
+	left: clamp(1rem, 2vw, 1.5rem);
+	font-family: var(--font-mono);
+	font-size: var(--fs-label);
+	letter-spacing: 0.06em;
+	color: var(--fg-ghost);
+	display: inline-flex;
+	gap: 0.25rem;
+	opacity: 0;
+	transition: opacity 700ms linear 900ms;
+}
+
+.corner-mark-path { color: var(--fg-dim); }
+
+body.is-joined .corner-mark { opacity: 1; }
+
+/* ---------- Footer reveal tied to is-joined ---------- */
+
+.site-footer {
+	opacity: 0;
+	transition: opacity 700ms linear 1200ms;
+}
+
+body.is-joined .site-footer { opacity: 1; }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 780px) {
+	.lattice {
+		--cell-w: clamp(4.25rem, 18vw, 6rem);
+		--cell-h: clamp(2.5rem, 9vw, 3.25rem);
+	}
+}
+
+@media (max-width: 560px) {
+	.stage {
+		padding: clamp(3.5rem, 12vw, 5rem) 1rem clamp(1rem, 4vw, 2rem);
+		align-items: start;
+	}
+
+	.lattice {
+		grid-template-columns: repeat(3, 1fr);
+		grid-auto-rows: minmax(2.5rem, auto);
+		width: 100%;
+		max-width: min(420px, 100%);
+		gap: 2px;
+	}
+
+	.mobile-hide { display: none !important; }
+
+	.cell {
+		padding: 0 0.65rem;
+		font-size: 0.6875rem;
+	}
+
+	.cell.center {
+		grid-column: 1 / -1;
+		grid-row: auto;
+		padding: clamp(1.5rem, 6vw, 2.25rem) 1rem;
+	}
+
+	.center-inner { gap: 0.85rem; }
+
+	.wordmark {
+		font-size: clamp(2.75rem, 14vw, 3.75rem);
+		letter-spacing: -0.05em;
+	}
+
+	.slogan {
+		font-size: 1.0625rem;
+		max-width: 22ch;
+	}
+
+	.cta-visual {
+		display: inline-flex;
+		padding: 0.65rem 0.85rem 0.65rem 0.75rem;
+		font-size: 0.8125rem;
+		flex-wrap: nowrap;
+		max-width: 100%;
+	}
+
+	.cta-label {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		min-width: 0;
+	}
+
+	.meta {
+		font-size: 0.625rem;
+		letter-spacing: 0.05em;
+	}
+
+	.lattice::before,
+	.lattice::after { display: none; }
+
+	.corner-mark {
+		top: 1rem;
+		left: 1rem;
+		font-size: 0.625rem;
+	}
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+	.cell,
+	.corner-mark,
+	.site-footer {
+		transition: none;
+		opacity: 1;
+		transform: none;
+	}
+	.cta-chevron { transition: none; }
+}

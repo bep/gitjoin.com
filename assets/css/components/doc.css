@@ -1,0 +1,295 @@
+/* Doc — the "ink-on-paper" page layout used by grrep.com.
+   Reusable across sibling sites that want a single-column,
+   left-aligned, terminal-honest landing page. Consumes the
+   tokens declared in base.css. */
+
+.page {
+	width: 100%;
+	max-width: 100%;
+	padding: clamp(2rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 2rem) clamp(2rem, 5vw, 3.5rem);
+}
+
+.doc {
+	width: 100%;
+	max-width: 38rem;
+	margin-inline: auto;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--space-3xl);
+}
+
+.doc > *      { min-width: 0; }
+.block > *    { min-width: 0; }
+.cmd > *      { min-width: 0; }
+
+/* ---------- header ---------- */
+
+.doc-head {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: baseline;
+	gap: var(--space-md);
+}
+
+.wordmark {
+	font-family: var(--font-sans);
+	font-weight: 700;
+	font-size: var(--fs-wordmark);
+	line-height: 0.9;
+	letter-spacing: -0.04em;
+	color: var(--fg);
+}
+
+.meta {
+	display: flex;
+	align-items: center;
+	gap: 0.45em;
+	font-family: var(--font-mono);
+	font-size: var(--fs-label);
+	color: var(--fg-dim);
+	letter-spacing: 0.02em;
+}
+
+.meta .dot { opacity: 0.55; }
+
+/* ---------- intro prose ---------- */
+
+.lede {
+	font-size: var(--fs-lede);
+	line-height: 1.2;
+	letter-spacing: -0.015em;
+	color: var(--fg);
+	max-width: 26ch;
+}
+
+.prose {
+	max-width: 60ch;
+	color: var(--fg-mute);
+	line-height: 1.55;
+}
+
+.prose code {
+	font-family: var(--font-mono);
+	font-size: 0.92em;
+	color: var(--fg);
+}
+
+.prose a {
+	color: var(--fg);
+	text-decoration: underline;
+	text-decoration-color: var(--rule);
+	transition: text-decoration-color 200ms ease, color 200ms ease;
+}
+
+.prose a:hover, .prose a:focus-visible {
+	color: var(--accent);
+	text-decoration-color: var(--accent);
+	outline: none;
+}
+
+/* ---------- section blocks ---------- */
+
+.block {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--space-md);
+}
+
+.rule {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	align-items: center;
+	gap: var(--space-md);
+	font-family: var(--font-mono);
+	font-size: var(--fs-h2);
+	font-weight: 500;
+	letter-spacing: 0.04em;
+	text-transform: lowercase;
+	color: var(--fg-dim);
+}
+
+.rule::after {
+	content: "";
+	height: 1px;
+	background: var(--rule-soft);
+}
+
+.rule span { padding-right: var(--space-2xs); }
+
+/* ---------- install command ---------- */
+
+.cmd {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	align-items: center;
+	gap: var(--space-md);
+	border: 1px solid var(--rule-soft);
+	background: var(--surface);
+	padding: var(--space-md);
+}
+
+.cmd pre {
+	margin: 0;
+	font-family: var(--font-mono);
+	font-size: var(--fs-mono);
+	color: var(--fg);
+	overflow-x: auto;
+	line-height: 1.4;
+	min-width: 0;
+}
+
+.cmd pre::before {
+	content: "$ ";
+	color: var(--fg-dim);
+}
+
+.copy {
+	appearance: none;
+	background: transparent;
+	border: 1px solid var(--rule);
+	color: var(--fg-mute);
+	font-family: var(--font-mono);
+	font-size: var(--fs-label);
+	padding: 0.45em 0.85em;
+	cursor: pointer;
+	letter-spacing: 0.04em;
+	transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.copy:hover, .copy:focus-visible {
+	color: var(--accent);
+	border-color: var(--accent);
+	outline: none;
+}
+
+.copy.is-copied {
+	color: var(--accent);
+	border-color: var(--accent);
+}
+
+/* ---------- terminal demo ---------- */
+
+.terminal {
+	margin: 0;
+	font-family: var(--font-mono);
+	font-size: var(--fs-mono);
+	line-height: 1.65;
+	color: var(--fg);
+	background: var(--surface);
+	border: 1px solid var(--rule-soft);
+	padding: var(--space-md) var(--space-lg);
+	overflow-x: auto;
+	white-space: pre;
+}
+
+.terminal .prompt { color: var(--fg-dim); user-select: none; }
+.terminal .input  { color: var(--fg); font-weight: 500; }
+.terminal .path   { color: var(--fg-mute); }
+.terminal .sep    { color: var(--fg-dim); }
+.terminal .line   { color: var(--fg-dim); }
+.terminal .match {
+	background: var(--match-bg);
+	color: var(--match-fg);
+	padding: 0 0.18em;
+}
+
+/* ---------- benchmark ---------- */
+
+.bench {
+	border-collapse: collapse;
+	font-family: var(--font-mono);
+	font-size: var(--fs-mono);
+	width: max-content;
+	max-width: 100%;
+}
+
+.bench th {
+	text-align: left;
+	font-weight: 400;
+	color: var(--fg-mute);
+	padding: 0.5em 2.5em 0.5em 0;
+	letter-spacing: 0.02em;
+}
+
+.bench td {
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+	color: var(--fg);
+	padding: 0.5em 0;
+}
+
+.bench .unit {
+	color: var(--fg-dim);
+	margin-left: 0.1em;
+}
+
+.bench tr.self th, .bench tr.self td {
+	color: var(--accent);
+	font-weight: 500;
+}
+
+/* ---------- source link ---------- */
+
+.repo-link {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.55em;
+	font-family: var(--font-mono);
+	font-size: var(--fs-mono);
+	color: var(--fg);
+	text-decoration: none;
+}
+
+.repo-link .arrow {
+	color: var(--accent);
+	transition: transform 220ms var(--ease-out);
+	display: inline-block;
+}
+
+.repo-link:hover .arrow,
+.repo-link:focus-visible .arrow {
+	transform: translateX(4px);
+}
+
+.repo-link .url {
+	text-decoration: underline;
+	text-decoration-color: var(--rule);
+	transition: text-decoration-color 200ms ease;
+}
+
+.repo-link:hover .url,
+.repo-link:focus-visible .url {
+	text-decoration-color: var(--accent);
+}
+
+/* ---------- footer override: align with the doc column ---------- */
+
+.site-footer {
+	width: 100%;
+	max-width: 38rem;
+	margin: 0 auto;
+	padding: var(--space-lg) clamp(1.25rem, 4vw, 2rem) var(--space-xl);
+	justify-content: flex-start;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 560px) {
+	.doc-head {
+		grid-template-columns: 1fr;
+		gap: var(--space-xs);
+	}
+	.meta { font-size: 0.6875rem; }
+	.doc { gap: var(--space-2xl); }
+	.cmd { gap: var(--space-sm); }
+	.copy { font-size: 0.6875rem; }
+	.bench th { padding-right: 1.5em; }
+	.terminal { padding: var(--space-md); }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+	.repo-link .arrow,
+	.copy { transition: none; }
+}

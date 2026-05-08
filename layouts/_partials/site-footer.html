@@ -1,0 +1,7 @@
+{{- $name := site.Params.name | default "gitjoin" -}}
+{{- $authorHandle := site.Params.authorHandle | default "bep" -}}
+{{- $authorURL := site.Params.authorURL | default "https://github.com/bep" -}}
+<footer class="site-footer">
+	<span class="footer-dot" aria-hidden="true"></span>
+	<span>{{ $name }} &middot; {{ now.Year }} &middot; made by <a href="{{ $authorURL }}" rel="noopener me">{{ $authorHandle }}</a></span>
+</footer>
