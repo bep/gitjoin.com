@@ -4,9 +4,9 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		{{- $title := cond .IsHome site.Title (printf "%s | %s" .Title site.Title) }}
-		{{- $desc  := site.Params.description }}
-		{{- $ogImg := absURL (site.Params.ogImage | default "/og.svg") }}
+		{{- $desc := site.Params.description }}
 		<title>{{ $title }}</title>
+
 		{{- with $desc }}
 			<meta name="description" content="{{ . }}" />
 		{{- end }}
@@ -16,68 +16,26 @@
 		{{- with site.Params.author }}
 			<meta name="author" content="{{ . }}" />
 		{{- end }}
+
 		<meta name="robots" content="index, follow, max-image-preview:large" />
 		<link rel="canonical" href="{{ .Permalink }}" />
 
-		<meta property="og:title" content="{{ $title }}" />
-		{{- with $desc }}<meta property="og:description" content="{{ . }}" />{{- end }}
-		<meta property="og:type" content="website" />
-		<meta property="og:site_name" content="gitjoin" />
-		<meta property="og:url" content="{{ .Permalink }}" />
-		<meta property="og:locale" content="{{ replace (site.Language.Lang | default `en_US`) `-` `_` }}" />
-		<meta property="og:image" content="{{ $ogImg }}" />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
-		<meta property="og:image:alt" content="gitjoin — virtual monorepo made simple" />
+		{{ range .AlternativeOutputFormats -}}
+			<link
+				rel="{{ .Rel }}"
+				type="{{ .MediaType.Type }}"
+				href="{{ .RelPermalink | safeURL }}" />
+		{{ end -}}
 
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content="{{ $title }}" />
-		{{- with $desc }}<meta name="twitter:description" content="{{ . }}" />{{- end }}
-		<meta name="twitter:image" content="{{ $ogImg }}" />
-		<meta name="twitter:image:alt" content="gitjoin — virtual monorepo made simple" />
+		{{ partial "opengraph.html" . }}
+		{{ partial "twitter_cards.html" . }}
 
 		<meta name="theme-color" content="#16161a" />
-
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="apple-touch-icon" href="/favicon.svg" />
 
 		{{- if .IsHome }}
-			{{- $ld := dict
-				"@context" "https://schema.org"
-				"@graph" (slice
-					(dict
-						"@type" "WebSite"
-						"@id" (printf "%s#website" site.BaseURL)
-						"url" site.BaseURL
-						"name" "gitjoin"
-						"description" $desc
-						"inLanguage" (site.Language.Lang | default "en")
-					)
-					(dict
-						"@type" "SoftwareApplication"
-						"name" "gitjoin"
-						"applicationCategory" "DeveloperApplication"
-						"operatingSystem" "Linux, macOS, Windows"
-						"description" $desc
-						"url" site.BaseURL
-						"downloadUrl" site.Params.repoURL
-						"codeRepository" site.Params.repoURL
-						"programmingLanguage" "Go"
-						"license" "https://opensource.org/licenses/MIT"
-						"author" (dict
-							"@type" "Person"
-							"name" site.Params.author
-							"url" "https://github.com/bep"
-						)
-						"offers" (dict
-							"@type" "Offer"
-							"price" "0"
-							"priceCurrency" "USD"
-						)
-					)
-				)
-			-}}
-			<script type="application/ld+json">{{ $ld | jsonify (dict "indent" "  ") | safeJS }}</script>
+			{{ partial "schema-home.html" . }}
 		{{- end }}
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">

@@ -1,0 +1,37 @@
+{{- $desc := site.Params.description }}
+{{- $ld := dict
+	"@context" "https://schema.org"
+	"@graph" (slice
+	(dict
+	"@type" "WebSite"
+	"@id" (printf "%s#website" .Permalink)
+	"url" .Permalink
+	"name" "gitjoin"
+	"description" $desc
+	"inLanguage" (site.Language.Locale)
+	)
+	(dict
+	"@type" "SoftwareApplication"
+	"name" (site.Params.name | default "gitjoin")
+	"applicationCategory" "DeveloperApplication"
+	"operatingSystem" "Linux, macOS, Windows"
+	"description" $desc
+	"url" .Permalink
+	"downloadUrl" site.Params.repoURL
+	"codeRepository" site.Params.repoURL
+	"programmingLanguage" (site.Params.programminLanguage | default "Go")
+	"license" (site.Params.programminLanguage | default "https://opensource.org/licenses/MIT")
+	"author" (dict
+	"@type" "Person"
+	"name" site.Params.author
+	"url" "https://github.com/bep"
+	)
+	"offers" (dict
+	"@type" "Offer"
+	"price" "0"
+	"priceCurrency" "USD"
+	)
+	)
+	)
+-}}
+<script type="application/ld+json">{{ $ld | jsonify (dict "indent" "  ") | safeJS }}</script>
