@@ -2,12 +2,15 @@
    hugo:vars at build time; sites declare them in hugo.toml params.vars. */
 
 :root {
-	/* Static tokens — type scale, spacing, motion. Same across all sites. */
-	--fs-label:    0.75rem;
-	--fs-mono:     0.875rem;
-	--fs-body:     clamp(0.9375rem, 0.88rem + 0.2vw, 1.0625rem);
+	/* Static tokens — type scale, spacing, motion. Same across all sites.
+	   Text scale (label/mono/body/h2) derives from --fs-base so the whole
+	   scale moves together. Lede and wordmark are independent display sizes. */
+	--fs-base:     clamp(1rem, 0.94rem + 0.25vw, 1.125rem);
+	--fs-body:     var(--fs-base);
+	--fs-label:    calc(var(--fs-base) * 0.75);
+	--fs-mono:     calc(var(--fs-base) * 0.875);
+	--fs-h2:       calc(var(--fs-base) * 0.8125);
 	--fs-lede:     clamp(1.25rem, 1.05rem + 0.85vw, 1.625rem);
-	--fs-h2:       0.8125rem;
 	--fs-wordmark: clamp(3rem, 2rem + 5vw, 5.5rem);
 
 	--space-2xs: 0.25rem;
