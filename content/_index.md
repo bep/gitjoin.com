@@ -1,5 +1,9 @@
 ---
 title: About gitjoin
+params:
+  repoURL: https://github.com/bep/gitjoin
+  programmingLanguage: Go
+  licenseURL: https://opensource.org/licenses/MIT
 ---
 
 ## What is gitjoin?

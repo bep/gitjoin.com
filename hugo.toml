@@ -9,13 +9,11 @@ disableKinds = ["taxonomy", "term", "404", "page", "rss", "section"]
 [params]
   name = "gitjoin"
   description = "gitjoin merges multiple Git repositories into a single virtual monorepo. A lightweight, open-source CLI written in Go — minimal config, no history rewrites, no submodules."
-  repoURL = "https://github.com/bep/gitjoin"
   author = "Bjørn Erik Pedersen"
   authorURL = "https://github.com/bep"
   authorHandle = "bep"
-  licenseURL = "https://opensource.org/licenses/MIT"
-  programmingLanguage = "Go"
   themeColor = "#16161a"
+  fontsHref = "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500;600&display=swap"
   keywords = [
     "virtual monorepo",
     "git monorepo",

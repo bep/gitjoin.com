@@ -1,4 +1,10 @@
-{{- $href := site.Params.fontsHref | default "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500;600&display=swap" -}}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="{{ $href }}" rel="stylesheet">
+{{- /*
+  Loads webfonts when site.Params.fontsHref is set.
+  Sites that prefer the system stack should leave fontsHref empty and
+  rely on the default values in their --font-sans / --font-mono tokens.
+*/ -}}
+{{- with site.Params.fontsHref -}}
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="{{ . }}" rel="stylesheet">
+{{- end -}}

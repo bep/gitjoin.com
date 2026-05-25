@@ -1,41 +1,42 @@
+{{- $home := site.Home -}}
 {{- $desc := site.Params.description -}}
-{{- $name := site.Params.name | default "gitjoin" -}}
-{{- $authorURL := site.Params.authorURL | default "https://github.com/bep" -}}
-{{- $licenseURL := site.Params.licenseURL | default "https://opensource.org/licenses/MIT" -}}
-{{- $lang := site.Params.programmingLanguage | default "Go" -}}
-{{- $ld := dict
-	"@context" "https://schema.org"
-	"@graph" (slice
-	(dict
+{{- $name := site.Params.name | default site.Title -}}
+{{- $authorURL := site.Params.authorURL -}}
+{{- $repoURL := $home.Params.repoURL -}}
+{{- $licenseURL := $home.Params.licenseURL | default "https://opensource.org/licenses/MIT" -}}
+{{- $lang := $home.Params.programmingLanguage | default "Go" -}}
+{{- $graph := slice (dict
 	"@type" "WebSite"
 	"@id" (printf "%s#website" .Permalink)
 	"url" .Permalink
 	"name" $name
 	"description" $desc
 	"inLanguage" (site.Language.Locale)
-	)
-	(dict
-	"@type" "SoftwareApplication"
-	"name" $name
-	"applicationCategory" "DeveloperApplication"
-	"operatingSystem" "Linux, macOS, Windows"
-	"description" $desc
-	"url" .Permalink
-	"downloadUrl" site.Params.repoURL
-	"codeRepository" site.Params.repoURL
-	"programmingLanguage" $lang
-	"license" $licenseURL
-	"author" (dict
-	"@type" "Person"
-	"name" site.Params.author
-	"url" $authorURL
-	)
-	"offers" (dict
-	"@type" "Offer"
-	"price" "0"
-	"priceCurrency" "USD"
-	)
-	)
-	)
+)
 -}}
+{{- if $repoURL -}}
+	{{- $graph = $graph | append (dict
+		"@type" "SoftwareApplication"
+		"name" $name
+		"applicationCategory" "DeveloperApplication"
+		"operatingSystem" "Linux, macOS, Windows"
+		"description" $desc
+		"url" .Permalink
+		"downloadUrl" $repoURL
+		"codeRepository" $repoURL
+		"programmingLanguage" $lang
+		"license" $licenseURL
+		"author" (dict
+			"@type" "Person"
+			"name" site.Params.author
+			"url" $authorURL
+		)
+		"offers" (dict
+			"@type" "Offer"
+			"price" "0"
+			"priceCurrency" "USD"
+		)
+	) -}}
+{{- end -}}
+{{- $ld := dict "@context" "https://schema.org" "@graph" $graph -}}
 <script type="application/ld+json">{{ $ld | jsonify (dict "indent" "  ") | safeJS }}</script>
