@@ -84,7 +84,11 @@
 .prose a:hover, .prose a:focus-visible {
 	color: var(--accent);
 	text-decoration-color: var(--accent);
-	outline: none;
+}
+
+.prose a:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
 }
 
 /* ---------- section blocks ---------- */
@@ -151,6 +155,8 @@
 	font-family: var(--font-mono);
 	font-size: var(--fs-label);
 	padding: 0.45em 0.85em;
+	min-height: 2.75rem;
+	min-width: 2.75rem;
 	cursor: pointer;
 	letter-spacing: 0.04em;
 	transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
@@ -159,7 +165,11 @@
 .copy:hover, .copy:focus-visible {
 	color: var(--accent);
 	border-color: var(--accent);
-	outline: none;
+}
+
+.copy:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
 }
 
 .copy.is-copied {
@@ -228,6 +238,32 @@
 	font-weight: 500;
 }
 
+/* ---------- flags ---------- */
+
+.flags {
+	border-collapse: collapse;
+	font-size: var(--fs-mono);
+	max-width: 100%;
+}
+
+.flags th {
+	font-family: var(--font-mono);
+	text-align: left;
+	font-weight: 500;
+	color: var(--fg);
+	padding: 0.4em 2em 0.4em 0;
+	white-space: nowrap;
+	vertical-align: baseline;
+}
+
+.flags td {
+	font-family: var(--font-sans);
+	color: var(--fg-mute);
+	padding: 0.4em 0;
+	line-height: 1.5;
+	vertical-align: baseline;
+}
+
 /* ---------- source link ---------- */
 
 .repo-link {
@@ -262,6 +298,11 @@
 	text-decoration-color: var(--accent);
 }
 
+.repo-link:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+}
+
 /* ---------- footer override: align with the doc column ---------- */
 
 .site-footer {
@@ -279,11 +320,12 @@
 		grid-template-columns: 1fr;
 		gap: var(--space-xs);
 	}
-	.meta { font-size: 0.6875rem; }
+	.meta { font-size: 0.75rem; }
 	.doc { gap: var(--space-2xl); }
 	.cmd { gap: var(--space-sm); }
-	.copy { font-size: 0.6875rem; }
+	.copy { font-size: 0.75rem; }
 	.bench th { padding-right: 1.5em; }
+	.flags th { padding-right: 1.25em; }
 	.terminal { padding: var(--space-md); }
 }
 
