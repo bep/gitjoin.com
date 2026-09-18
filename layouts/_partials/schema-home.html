@@ -36,7 +36,8 @@
 			"price" "0"
 			"priceCurrency" "USD"
 		)
-	) -}}
+	)
+	-}}
 {{- end -}}
 {{- $ld := dict "@context" "https://schema.org" "@graph" $graph -}}
 <script type="application/ld+json">{{ $ld | jsonify (dict "indent" "  ") | safeJS }}</script>
