@@ -1,0 +1,19 @@
+{{- $name := site.Params.name | default "gitjoin" -}}
+<header class="site-header">
+	<a class="brand" href="{{ site.Home.RelPermalink }}" aria-label="{{ $name }} home">
+		{{ partial "icon.html" "mark" }}
+		<span>{{ $name }}</span>
+	</a>
+	<nav class="nav" aria-label="Primary">
+		<a href="#how">How it works</a>
+		<a href="#features">Features</a>
+		<a href="#compare">vs. submodules</a>
+	</nav>
+	<div class="nav-end">
+		<a class="nav-icon" href="https://x.com/{{ site.Params.twitterHandle }}" rel="noopener me" aria-label="{{ site.Params.author }} on X">{{ partial "icon.html" "x" }}</a>
+		<a class="btn btn-sm" href="{{ site.Params.repoURL }}" rel="noopener">
+			{{ partial "icon.html" "github" }}
+			<span>GitHub</span>
+		</a>
+	</div>
+</header>

@@ -8,12 +8,15 @@ disableKinds = ["taxonomy", "term", "404", "page", "rss", "section"]
 
 [params]
   name = "gitjoin"
-  description = "gitjoin merges multiple Git repositories into a single virtual monorepo. A lightweight, open-source CLI written in Go — minimal config, no history rewrites, no submodules."
+  version = "v0.4.0"
+  description = "gitjoin turns many Git repositories into one virtual monorepo. List repos in plain-text gitjoin.txt files and one command clones, pulls and prunes them. Open source, written in Go, no submodules."
   author = "Bjørn Erik Pedersen"
   authorURL = "https://github.com/bep"
   authorHandle = "bep"
-  themeColor = "#16161a"
-  fontsHref = "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+  twitterHandle = "bepsays"
+  repoURL = "https://github.com/bep/gitjoin"
+  themeColor = "#0b0c0d"
+  fontsHref = "https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Fragment+Mono&display=swap"
   keywords = [
     "virtual monorepo",
     "git monorepo",
@@ -21,27 +24,26 @@ disableKinds = ["taxonomy", "term", "404", "page", "rss", "section"]
     "multi-repo",
     "polyrepo",
     "git submodules alternative",
-    "merge git repositories",
+    "manage multiple git repositories",
     "monorepo CLI",
     "gitjoin",
     "Go monorepo tool",
   ]
 
 # Design tokens consumed via @import "hugo:vars" in main.css.
-# gitjoin is dark only — no [params.vars.dark] override block needed.
+# gitjoin is dark only, strictly monochrome — no [params.vars.dark] override block needed.
 [params.vars]
-  bg        = "oklch(16% 0.008 65)"
-  surface   = "oklch(22% 0.009 62)"
-  rule      = "oklch(32% 0.010 60)"
-  rule-soft = "oklch(27% 0.008 60)"
-  fg        = "oklch(94% 0.010 85)"
-  fg-mute   = "oklch(72% 0.012 75)"
-  fg-dim    = "oklch(55% 0.012 65)"
-  accent    = "oklch(78% 0.110 58)"
-  match-bg  = "oklch(28% 0.028 62)"
-  match-fg  = "oklch(82% 0.065 70)"
-  font-sans = '"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif'
-  font-mono = '"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace'
+  bg        = "oklch(14.5% 0.002 250)"
+  surface   = "oklch(17.5% 0.002 250)"
+  surface-2 = "oklch(21% 0.003 250)"
+  rule      = "oklch(29% 0.003 250)"
+  rule-soft = "oklch(23% 0.003 250)"
+  fg        = "oklch(96.5% 0.002 250)"
+  fg-mute   = "oklch(76% 0.003 250)"
+  fg-dim    = "oklch(58% 0.003 250)"
+  fg-ghost  = "oklch(42% 0.003 250)"
+  font-sans = '"Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif'
+  font-mono = '"Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace'
 
 [sitemap]
   changefreq = "weekly"

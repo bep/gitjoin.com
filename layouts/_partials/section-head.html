@@ -1,0 +1,13 @@
+{{- /*
+  Section heading: mono label, title and optional lede.
+
+  Usage:
+    {{ partial "section-head.html" (dict "label" "Features" "title" "…" "lede" "…") }}
+*/ -}}
+<header class="sec-head">
+	<span class="label">{{ .label }}</span>
+	<h2>{{ .title }}</h2>
+	{{- with .lede }}
+		<p>{{ . }}</p>
+	{{- end }}
+</header>

@@ -1,0 +1,24 @@
+{{- /*
+  Renders a small code sample with monochrome, line-based highlighting:
+  comments, shell commands, gitjoin summary headings and list items.
+
+  Usage:
+    {{ partial "code.html" $code }}
+*/ -}}
+{{- $lines := slice -}}
+{{- range split (strings.TrimRight "\n" .) "\n" -}}
+	{{- $cls := "" -}}
+	{{- $line := . | htmlEscape -}}
+	{{- if hasPrefix . "#" -}}
+		{{- $cls = "c-comment" -}}
+	{{- else if hasPrefix . "$ " -}}
+		{{- $cls = "c-cmd" -}}
+	{{- else if hasPrefix . "  - " -}}
+		{{- $cls = "c-item" -}}
+		{{- $line = replaceRE `(\(.*\))$` `<span class="c-note">$1</span>` $line -}}
+	{{- else if findRE `^[A-Z][^:]*:` . -}}
+		{{- $cls = "c-head" -}}
+	{{- end -}}
+	{{- $lines = $lines | append (printf `<span class="ln %s">%s</span>` $cls $line) -}}
+{{- end -}}
+{{- printf `<pre class="code"><code>%s</code></pre>` (delimit $lines "\n") | safeHTML -}}

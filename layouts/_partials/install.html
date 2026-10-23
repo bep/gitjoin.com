@@ -1,0 +1,13 @@
+{{- /*
+  Install command with a copy button.
+
+  Usage:
+    {{ partial "install.html" "go install github.com/bep/gitjoin@latest" }}
+*/ -}}
+<div class="install">
+	<code><span class="prompt" aria-hidden="true">$</span> <span data-copy-src>{{ . }}</span></code>
+	<button class="copy" type="button" data-copy aria-label="Copy install command">
+		<span class="copy-idle">{{ partial "icon.html" "copy" }}</span>
+		<span class="copy-done">{{ partial "icon.html" "check" }}</span>
+	</button>
+</div>

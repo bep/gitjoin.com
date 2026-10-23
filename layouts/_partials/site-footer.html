@@ -1,7 +1,10 @@
 {{- $name := site.Params.name | default "gitjoin" -}}
-{{- $authorHandle := site.Params.authorHandle | default "bep" -}}
-{{- $authorURL := site.Params.authorURL | default "https://github.com/bep" -}}
 <footer class="site-footer">
-	<span class="footer-dot" aria-hidden="true"></span>
-	<span>{{ $name }} &middot; {{ now.Year }} &middot; made by <a href="{{ $authorURL }}" rel="noopener me">{{ $authorHandle }}</a> &middot; powered by <a href="https://gohugo.io/">Hugo</a></span>
+	<span class="label">{{ $name }} {{ site.Params.version }} &middot; {{ site.Home.Params.licenseName }} &middot; {{ now.Year }}</span>
+	<nav class="footer-links" aria-label="Footer">
+		<a class="label" href="{{ site.Params.repoURL }}" rel="noopener">Source</a>
+		<a class="label" href="{{ site.Params.repoURL }}/releases" rel="noopener">Releases</a>
+		<a class="label" href="{{ site.Params.repoURL }}/issues" rel="noopener">Issues</a>
+		<a class="label" href="https://gohugo.io/">Built with Hugo</a>
+	</nav>
 </footer>

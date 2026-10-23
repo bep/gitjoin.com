@@ -2,8 +2,8 @@
 {{- $desc := site.Params.description -}}
 {{- $name := site.Params.name | default site.Title -}}
 {{- $authorURL := site.Params.authorURL -}}
-{{- $repoURL := $home.Params.repoURL -}}
-{{- $licenseURL := $home.Params.licenseURL | default "https://opensource.org/licenses/MIT" -}}
+{{- $repoURL := site.Params.repoURL -}}
+{{- $licenseURL := $home.Params.licenseURL | default "https://www.apache.org/licenses/LICENSE-2.0" -}}
 {{- $lang := $home.Params.programmingLanguage | default "Go" -}}
 {{- $graph := slice (dict
 	"@type" "WebSite"
@@ -30,6 +30,7 @@
 			"@type" "Person"
 			"name" site.Params.author
 			"url" $authorURL
+			"sameAs" (slice $authorURL (printf "https://x.com/%s" site.Params.twitterHandle))
 		)
 		"offers" (dict
 			"@type" "Offer"
