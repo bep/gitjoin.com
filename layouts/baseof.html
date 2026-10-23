@@ -45,7 +45,13 @@
 		{{ partial "head/js.html" (dict "ctx" . "path" "js/main.js") }}
 	</head>
 	<body>
-		{{ block "main" . }}{{ end }}
-		{{ partial "site-footer.html" . }}
+		<a class="skip" href="#main">Skip to content</a>
+		<div class="frame">
+			{{ partial "site-header.html" . }}
+			<main id="main">
+				{{ block "main" . }}{{ end }}
+			</main>
+			{{ partial "site-footer.html" . }}
+		</div>
 	</body>
 </html>

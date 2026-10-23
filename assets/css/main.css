@@ -1,6 +1,6 @@
 @import "hugo:vars";
 @import "components/reset.css";
 @import "components/base.css";
-@import "components/lattice.css";
+@import "components/landing.css";
 
 :root { color-scheme: dark; }

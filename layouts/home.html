@@ -1,62 +1,198 @@
 {{ define "main" }}
-{{- $repo := site.Params.repoURL | default "https://github.com/bep/gitjoin" -}}
-<main class="stage">
-	<div class="lattice" role="presentation">
-		{{/* Row 1 */}}
-		<div class="cell" data-tint="amber" style="--dx:-60px;--dy:-48px;--r:-5deg;--d:40ms">api</div>
-		<div class="cell"                    style="--dx: 28px;--dy:-64px;--r: 3deg;--d:120ms">cli</div>
-		<div class="cell" data-tint="teal"   style="--dx:-18px;--dy:-72px;--r:-2deg;--d:200ms">ui</div>
-		<div class="cell"                    style="--dx: 48px;--dy:-50px;--r: 4deg;--d:280ms">docs</div>
-		<div class="cell" data-tint="rust"   style="--dx:-30px;--dy:-60px;--r:-4deg;--d:360ms">core</div>
+{{- $p := .Params -}}
+{{- $repo := site.Params.repoURL -}}
+{{- $repos := where $p.tree "k" "repo" -}}
 
-		{{/* Row 2 */}}
-		<div class="cell"                    style="--dx:-88px;--dy:-20px;--r:-7deg;--d:80ms">www</div>
-
-		<a class="cell center"
-			href="{{ $repo }}"
-			rel="noopener"
-			aria-label="Open the gitjoin repository on GitHub">
-			<div class="center-inner">
-				<h1 class="wordmark"><span>git</span><span class="join">join</span></h1>
-				<p class="slogan">Virtual monorepo made simple.</p>
-
-				<span class="cta-visual">
-					<span class="cta-chevron" aria-hidden="true">→</span>
-					<span class="cta-label">github.com/bep/gitjoin</span>
-				</span>
-
-				<p class="meta" aria-hidden="true">
-					<span class="meta-dot"></span>
-					<span class="meta-text">16 repositories &middot; 1 virtual tree</span>
-				</p>
-			</div>
-		</a>
-
-		<div class="cell" data-tint="teal"   style="--dx: 92px;--dy: 8px;--r: 5deg;--d:160ms">tool</div>
-
-		{{/* Row 3 */}}
-		<div class="cell" data-tint="amber"  style="--dx:-96px;--dy:  0px;--r:-8deg;--d:240ms">fmt</div>
-		<div class="cell mobile-hide"        style="--dx: 84px;--dy:-12px;--r: 6deg;--d:320ms">dx</div>
-
-		{{/* Row 4 */}}
-		<div class="cell" data-tint="rust"   style="--dx:-72px;--dy: 22px;--r:-6deg;--d:400ms">log</div>
-		<div class="cell mobile-hide"        style="--dx: 88px;--dy: 30px;--r: 7deg;--d:480ms">pkg</div>
-
-		{{/* Row 5 */}}
-		<div class="cell"                    style="--dx:-42px;--dy: 64px;--r: 3deg;--d:160ms">http</div>
-		<div class="cell mobile-hide" data-tint="teal" style="--dx: 22px;--dy: 68px;--r:-2deg;--d:240ms">data</div>
-		<div class="cell" data-tint="amber"  style="--dx:-30px;--dy: 76px;--r: 5deg;--d:320ms">auth</div>
-		<div class="cell mobile-hide"        style="--dx: 44px;--dy: 62px;--r:-4deg;--d:400ms">web</div>
-		<div class="cell" data-tint="rust"   style="--dx:-20px;--dy: 72px;--r: 2deg;--d:480ms">cfg</div>
+{{/* ---------- Hero ---------- */}}
+<section class="sec hero">
+	<div class="hero-copy">
+		<p class="label eyebrow">
+			<span class="dot" aria-hidden="true"></span>
+			{{ site.Params.version }} &middot; Open source &middot; Written in Go
+		</p>
+		<h1 class="display"><span>Virtual monorepo</span> <span class="dim">made simple.</span></h1>
+		<p class="lede">
+			Keep every repository where it is. List them in a plain-text
+			<code>gitjoin.txt</code>, run one command, and work across all of
+			them as one tree.
+		</p>
+		<div class="actions">
+			{{ partial "install.html" $p.install }}
+			<a class="btn btn-primary" href="{{ $repo }}" rel="noopener">
+				<span>View on GitHub</span>
+				{{ partial "icon.html" "arrow" }}
+			</a>
+		</div>
 	</div>
 
-	<aside class="corner-mark" aria-hidden="true">
-		<span>./</span>
-		<span class="corner-mark-path">gitjoin</span>
-	</aside>
+	<figure class="demo panel" data-demo aria-label="Animated example: gitjoin cloning {{ len $repos }} repositories into one workspace tree">
+		<div class="panel-bar">
+			<span class="label">workspace</span>
+			<button class="label replay" type="button" data-replay hidden>Replay</button>
+		</div>
+		<ol class="tree" aria-hidden="true">
+			{{- range $p.tree }}
+				<li class="t t-{{ .k }}" {{ if eq .k "repo" }}data-repo{{ end }}>
+					{{- /* Draw the tree guides per 4-char segment; box-drawing glyphs vary between fonts. */ -}}
+					{{- $segs := dict "│" "pipe" " " "blank" "├" "tee" "└" "end" -}}
+					<span class="t-pre">
+						{{- range $i, $r := split .p "" -}}
+							{{- if eq (mod $i 4) 0 }}<span class="seg seg-{{ index $segs $r }}"></span>{{ end -}}
+						{{- end -}}
+					</span>
+					<span class="t-name">{{ .n }}{{ if or (eq .k "dir") (eq .k "repo") }}/{{ end }}</span>
+					{{- if eq .k "repo" }}<span class="t-status">cloned</span>{{ end }}
+				</li>
+			{{- end }}
+		</ol>
+		<div class="term" aria-hidden="true">
+			<div class="term-line">
+				<span class="prompt">$</span>
+				<span data-type>gitjoin</span><span class="caret"></span>
+			</div>
+			<div class="term-out" data-out>Cloned: {{ len $repos }} repos</div>
+		</div>
+	</figure>
+</section>
 
-	<section class="sr-only" aria-label="{{ .Title }}">
-		{{ .Content }}
-	</section>
-</main>
+{{/* ---------- Facts ---------- */}}
+<section class="facts" aria-label="At a glance">
+	{{- range $p.facts }}
+		<div class="fact">
+			<span class="fact-value">{{ .value }}</span>
+			<span class="label">{{ .label }}</span>
+		</div>
+	{{- end }}
+</section>
+
+{{/* ---------- How it works ---------- */}}
+<section class="sec" id="how">
+	{{ partial "section-head.html" (dict
+		"label" "How it works"
+		"title" "One file. One command. One tree."
+		"lede" "A gitjoin workspace is an ordinary Git repo with a few text files in it. gitjoin fills in the rest."
+	)
+	}}
+	<div class="how" data-tabs>
+		<div class="steps" role="tablist" aria-label="Steps" aria-orientation="vertical">
+			{{- range $i, $s := $p.steps }}
+				<button
+					class="step"
+					type="button"
+					role="tab"
+					id="tab-{{ $s.id }}"
+					aria-controls="panel-{{ $s.id }}"
+					aria-selected="{{ cond (eq $i 0) `true` `false` }}"
+					tabindex="{{ cond (eq $i 0) `0` `-1` }}">
+					<span class="step-num label">{{ printf "%02d" (add $i 1) }}</span>
+					<span class="step-text">
+						<span class="step-title">{{ $s.title }}</span>
+						<span class="step-body">{{ $s.body | $.RenderString }}</span>
+					</span>
+				</button>
+			{{- end }}
+		</div>
+		<div class="panel code-panel">
+			{{- range $i, $s := $p.steps }}
+				<div
+					class="code-view"
+					role="tabpanel"
+					id="panel-{{ $s.id }}"
+					aria-labelledby="tab-{{ $s.id }}"
+					{{ if ne $i 0 }}hidden{{ end }}>
+					<div class="panel-bar"><span class="label">{{ $s.file }}</span></div>
+					{{ partial "code.html" $s.code }}
+				</div>
+			{{- end }}
+		</div>
+	</div>
+</section>
+
+{{/* ---------- Features ---------- */}}
+<section class="sec" id="features">
+	{{ partial "section-head.html" (dict
+		"label" "Features"
+		"title" "Monorepo ergonomics. No migration."
+		"lede" "Your repositories keep their own history, owners, CI and release cycles. gitjoin only decides where they live on disk."
+	)
+	}}
+	<ul class="features">
+		{{- range $p.features }}
+			<li class="feature">
+				<h3>{{ .title | $.RenderString }}</h3>
+				<p>{{ .body | $.RenderString }}</p>
+			</li>
+		{{- end }}
+	</ul>
+</section>
+
+{{/* ---------- Use cases ---------- */}}
+<section class="sec split" id="why">
+	{{ partial "section-head.html" (dict
+		"label" "Why"
+		"title" "Separate repos are right. Until you need all of them at once."
+	)
+	}}
+	<ul class="uses">
+		{{- range $p.useCases }}
+			<li><span class="uses-arrow" aria-hidden="true">→</span><span>{{ . | $.RenderString }}</span></li>
+		{{- end }}
+	</ul>
+</section>
+
+{{/* ---------- Compare ---------- */}}
+<section class="sec" id="compare">
+	{{ partial "section-head.html" (dict
+		"label" "vs. Git submodules"
+		"title" "Submodules pin dependencies. gitjoin gathers peers."
+		"lede" "Need a reproducible, version-pinned tree? Use submodules, that is what they are for. Need an umbrella over many repos you actively develop? That is gitjoin."
+	)
+	}}
+	<div class="table-wrap">
+		<table class="compare">
+			<thead>
+				<tr>
+					<th scope="col"><span class="sr-only">Aspect</span></th>
+					<th scope="col" class="label">Git submodules</th>
+					<th scope="col" class="label">gitjoin</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{- range $p.compare }}
+					<tr>
+						<th scope="row">{{ .aspect }}</th>
+						<td data-label="Submodules">{{ .submodules }}</td>
+						<td data-label="gitjoin">{{ .gitjoin }}</td>
+					</tr>
+				{{- end }}
+			</tbody>
+		</table>
+	</div>
+</section>
+
+{{/* ---------- Get it ---------- */}}
+<section class="sec get" id="get">
+	<div class="get-copy">
+		<span class="label">Get started</span>
+		<h2 class="display display-sm">Join your repos.</h2>
+		<div class="actions">
+			{{ partial "install.html" $p.install }}
+			<a class="btn btn-primary" href="{{ $repo }}" rel="noopener">
+				{{ partial "icon.html" "github" }}
+				<span>bep/gitjoin</span>
+			</a>
+		</div>
+	</div>
+	<aside class="author" aria-label="Author">
+		<div class="author-text">
+			<span class="label">Made by</span>
+			<p class="author-name">{{ site.Params.author }}</p>
+			<p class="author-bio">Lead developer of <a href="https://gohugo.io/">Hugo</a>, and keeper of more Git repositories than anyone should clone by hand.</p>
+			<div class="author-links">
+				<a class="chip" href="{{ site.Params.authorURL }}" rel="noopener me">{{ partial "icon.html" "github" }}<span>{{ site.Params.authorHandle }}</span></a>
+				<a class="chip" href="https://x.com/{{ site.Params.twitterHandle }}" rel="noopener me">{{ partial "icon.html" "x" }}<span>@{{ site.Params.twitterHandle }}</span></a>
+			</div>
+		</div>
+	</aside>
+</section>
 {{ end }}
